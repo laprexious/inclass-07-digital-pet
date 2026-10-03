@@ -41,7 +41,7 @@ Undergraduate
 * Session Controls
 * Visual Polish & Accessible Motion
 
-## Team roles
+## Team roles (dif branches all done solo)
 
 Team 1: Care Systems
 
@@ -85,14 +85,14 @@ Timer and session state are safely reset and restarted.
 
 Donkey - mirys (CC0 (Public Domain)), via Clipart.Free
 
-## GitHub: 
+### Map Features to Learning Outcomes
 
-Repository:
-https://github.com/laprexious/inclass-07-digital-pet.git
-
-Team 2 Pull Request:
-[(https://github.com/laprexious/inclass-07-digital-pet/pull/1#issue-5687184932)]
-
+| Feature | Learning Outcome | Evidence |
+| Mood tint and size | Color and scale derive from happiness using the same thresholds as the mood label. | Tested happiness at 29, 30, 70, and 71. |
+| Smooth meters | Build reads state-derived values without side effects. | Tested meter changes and boundary behavior. |
+| Expression switch | UI responds to changes in pet state. | Pet message changes using AnimatedSwitcher. |
+| Reduced-motion support | Interaction remains usable with motion disabled. | Reduced-motion behavior is supported through MediaQuery. |
+| Session controls | Resources and session state are safely managed. | Restart cancels the existing timers and starts a fresh hunger timer. |
 ## Team Roles
 
 - SOLO PROJECT
