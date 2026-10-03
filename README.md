@@ -91,17 +91,20 @@ Donkey - mirys (CC0 (Public Domain)), via Clipart.Free
 | :--------------------- | :--------------------------------------------------------------------------------- | :--------------------------------------------------------------- |
 | Mood tint and size     | Color and scale derive from happiness using the same thresholds as the mood label. | Tested happiness at 29, 30, 70, and 71.                          |
 | Smooth meters          | Progress indicators display values derived from the current pet state.             | Tested meter changes and boundary behavior.                      |
-| Expression switch      | UI responds to changes in the pet's state.                                         | Pet message changes using `AnimatedSwitcher`.                    |
-| Reduced-motion support | Interaction remains usable when motion is disabled.                                | Uses `MediaQuery.of(context).disableAnimations`.                 |
+| Expression switch      | UI responds to changes in the pet's state.                                         | Pet message changes using AnimatedSwitcher.                    |
+| Reduced-motion support | Interaction remains usable when motion is disabled.                                | Uses MediaQuery.of(context).disableAnimations.                 |
 | Session controls       | Session state and timers are safely managed.                                       | Restart cancels existing timers and starts a fresh hunger timer. |
 
 ## Team Roles
 
 - SOLO PROJECT
 
+## Pull Requests
+Branch 2: Pet Personality — [(https://github.com/laprexious/inclass-07-digital-pet/pull/1#issue-5687184932)]
+
 ## Test Evidence
 used: 
-`flutter analyze` completed with no issues.
+flutter analyze completed with no issues.
 
 Manual boundary and outcome tests were completed as well and expected outcomes were present.
 
