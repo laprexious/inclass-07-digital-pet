@@ -87,12 +87,14 @@ Donkey - mirys (CC0 (Public Domain)), via Clipart.Free
 
 ### Map Features to Learning Outcomes
 
-| Feature | Learning Outcome | Evidence |
-| Mood tint and size | Color and scale derive from happiness using the same thresholds as the mood label. | Tested happiness at 29, 30, 70, and 71. |
-| Smooth meters | Build reads state-derived values without side effects. | Tested meter changes and boundary behavior. |
-| Expression switch | UI responds to changes in pet state. | Pet message changes using AnimatedSwitcher. |
-| Reduced-motion support | Interaction remains usable with motion disabled. | Reduced-motion behavior is supported through MediaQuery. |
-| Session controls | Resources and session state are safely managed. | Restart cancels the existing timers and starts a fresh hunger timer. |
+| Feature                | Learning Outcome                                                                   | Evidence                                                         |
+| :--------------------- | :--------------------------------------------------------------------------------- | :--------------------------------------------------------------- |
+| Mood tint and size     | Color and scale derive from happiness using the same thresholds as the mood label. | Tested happiness at 29, 30, 70, and 71.                          |
+| Smooth meters          | Progress indicators display values derived from the current pet state.             | Tested meter changes and boundary behavior.                      |
+| Expression switch      | UI responds to changes in the pet's state.                                         | Pet message changes using `AnimatedSwitcher`.                    |
+| Reduced-motion support | Interaction remains usable when motion is disabled.                                | Uses `MediaQuery.of(context).disableAnimations`.                 |
+| Session controls       | Session state and timers are safely managed.                                       | Restart cancels existing timers and starts a fresh hunger timer. |
+
 ## Team Roles
 
 - SOLO PROJECT
