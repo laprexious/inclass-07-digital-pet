@@ -110,10 +110,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //color change based on mood//
   Color get _moodColor {
-    if (_happiness > 70) return Colors.green;
-    if (_happiness >= 30) return Colors.yellow;
-    return Colors.red;
+    if (_happiness > 70) return const Color.fromARGB(253, 76, 175, 79);
+    if (_happiness >= 30) return const Color.fromARGB(255, 255, 235, 59);
+    return const Color.fromARGB(255, 244, 67, 54);
   }
+  double get _petScale => _happiness > 70 ? 1.06 : _happiness < 30 ? 0.94 : 1.0;
 
   String get _petMessage {
     if (_gameOver) return 'I need a rest.';
@@ -150,7 +151,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _nameController.dispose();
     super.dispose();
   }
-
   void _resetPet() {
     _highMoodTimer?.cancel();
     _highMoodTimer = null;
@@ -164,9 +164,40 @@ class _MyHomePageState extends State<MyHomePage> {
 
     _updateOutcome();
   }
+  //restart logic//
+  void _restartSession() {
+    _hungerTimer?.cancel();
+    _highMoodTimer?.cancel();
+    _highMoodTimer = null;
 
+    setState(() {
+      _happiness = 50;
+      _hunger = 50;
+      _gameOver = false;
+      _hasWon = false;
+    });
+
+    _hungerTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      if (!mounted || _gameOver || _hasWon) {
+        timer.cancel();
+        return;
+      }
+
+      setState(() {
+        if (_hunger + 5 > 100) {
+          _hunger = 100;
+          _happiness = _clampMeter(_happiness - 20);
+        } else {
+          _hunger += 5;
+        }
+      });
+
+      _updateOutcome();
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.of(context).disableAnimations;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -213,24 +244,31 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('Confirm Name'),
             ),
-            ColorFiltered(
-              colorFilter: ColorFilter.mode(_moodColor, BlendMode.modulate),
-              child: Image.asset(
-                'assets/pet-insect.png',
-                width: 150,
-                height: 150,
+            AnimatedScale(
+              scale: _petScale,
+              duration: reduceMotion ? Duration.zero : const Duration(milliseconds: 180),
+              curve: Curves.easeOutBack,
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(_moodColor, BlendMode.modulate),
+                child: Image.asset('assets/pet-insect.png', width: 150, height: 150),
               ),
             ),
 
-            Text(_petMessage),
+            AnimatedSwitcher(
+              duration: reduceMotion ? Duration.zero : const Duration(milliseconds: 300),
+              child: Text(_petMessage, key: ValueKey(_petMessage)),
+            ),
             Text(_happiness > 70 ? 'Happy' : _happiness < 30 ? 'Sad' : 'Okay'),
             Text('Happiness: $_happiness'),
             LinearProgressIndicator(
               value: _happiness / 100,
             ),
              Text('Hunger: $_hunger'),
-            LinearProgressIndicator(
-              value: _hunger / 100,
+            TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0, end: _hunger / 100),
+              duration: reduceMotion ? Duration.zero : const Duration(milliseconds: 400),
+              curve: Curves.easeOut,
+              builder: (context, value, _) => LinearProgressIndicator(value: value),
             ),
             ElevatedButton(
               onPressed: _feedPet,
@@ -243,6 +281,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: _resetPet,
               child: const Text('Reset'),
+            ),
+            ElevatedButton(
+              onPressed: _restartSession,
+              child: const Text('Restart'),
             ),
           ],
         ),
